@@ -1,4 +1,5 @@
 import 'package:crush_dating/onboarding/view/select.gender.dart';
+import 'package:crush_dating/onboarding/view/userprompt.page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -127,7 +128,7 @@ class _SelecteQualitiesPageState extends State<SelecteQualitiesPage> {
         child: GestureDetector(
           onTap: () {
             Navigator.push(context,
-                CupertinoPageRoute(builder: (context) => SelectGenderPage()));
+                CupertinoPageRoute(builder: (context) => UserPrompt()));
           },
           child: Container(
             height: 50.h,

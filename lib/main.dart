@@ -1,4 +1,8 @@
+import 'package:crush_dating/chatssection/chatsection.page.dart';
+import 'package:crush_dating/crushonyou/crushonyou.page.dart';
 import 'package:crush_dating/onboarding/view/login.page.dart';
+import 'package:crush_dating/onboarding/view/UploadPhotos.Page.dart';
+import 'package:crush_dating/onboarding/view/userprompt.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,7 +21,8 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) {
         return MaterialApp(
-         home: LoginPage(),
+        //  home: LoginPage(),
+        home: CrushonYouPage(),
         );
       },
     );

@@ -1,3 +1,4 @@
+import 'package:crush_dating/home/home.page.dart';
 import 'package:crush_dating/onboarding/view/name.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -70,7 +71,11 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: SocailButton(icon: 'assets/facebook.png', title: 'Login with Facebook',)),
                 SizedBox(height: 10.h,),
-                SocailButton(icon: 'assets/google.png', title: 'Login with Google',),
+                GestureDetector(
+                  onTap: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                  },
+                  child: SocailButton(icon: 'assets/google.png', title: 'Login with Google',)),
                 SizedBox(height: 10.h,),
                 SocailButton(icon: 'assets/apple.png', title: 'Login with Apple',),
                 SizedBox(height: 10.h,),

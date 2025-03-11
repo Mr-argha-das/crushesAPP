@@ -1,5 +1,4 @@
 import 'package:crush_dating/onboarding/view/qualities.page.dart';
-import 'package:crush_dating/onboarding/view/select.gender.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
