@@ -301,6 +301,8 @@ class _UserPromptState extends ConsumerState<UserPrompt> {
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
         child: GestureDetector(
           onTap: () {
+            print("Before update: ${ref.read(userStepFormProvider).interests}");
+
             Navigator.push(context,
                 CupertinoPageRoute(builder: (context) => UploadPhotosPage()));
           },

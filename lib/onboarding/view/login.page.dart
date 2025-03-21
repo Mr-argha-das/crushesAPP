@@ -72,10 +72,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NameAddPage()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
                     },
                     child: SocailButton(
                       icon: 'assets/facebook.png',

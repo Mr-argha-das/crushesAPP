@@ -31,10 +31,13 @@ class RegisterStepForm extends StateNotifier<UserRegisterModel> {
       state = state.copyWith(thirdPrompt: prompt);
 
   // ✅ Methods for interests and qualities
-  void addInterest(List<String> interest) =>
-      state = state.copyWith(interests: interest);
-  void addQuality(List<String> quality) =>
-      state = state.copyWith(qualities: quality);
+  void addInterests(List<String> interests) {
+    state = state.copyWith(interests: List.from(interests));
+  }
+
+  void addQualities(List<String> qualities) {
+    state = state.copyWith(qualities: List.from(qualities));
+  }
 
   void removeInterest(String interest) {
     state = state.copyWith(

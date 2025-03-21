@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:crush_dating/core/preetty.dio.dart';
+import 'package:crush_dating/home/home.page.dart';
 import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/model/login.response.model.dart';
 import 'package:crush_dating/onboarding/service/login.service.dart';
 import 'package:crush_dating/onboarding/view/name.page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,7 +28,7 @@ class AuthService {
         log("Google User Email: ${googleUser.email}");
         log("Google User ID: ${googleUser.id}");
         log("Google User Photo URL: ${googleUser.photoUrl}");
-        final service = LoginService(await createDio());
+        final service = LoginService(await createDio(ref));
         try {
           LoginResponseModel response = await service.loginUser(
               grantType: "password",
@@ -34,6 +36,10 @@ class AuthService {
               password: googleUser.id,
               clientId: googleUser.email,
               clientSecret: googleUser.email);
+          Navigator.pushAndRemoveUntil(
+              context,
+              CupertinoPageRoute(builder: (context) => HomePage()),
+              (route) => false);
         } catch (E) {
           Fluttertoast.showToast(msg: "account not found");
           ref
@@ -45,7 +51,8 @@ class AuthService {
           ref.read(userStepFormProvider.notifier).updateUuid(googleUser.email);
           ref.read(userStepFormProvider.notifier).updatePassword(googleUser.id);
           ref.read(userStepFormProvider.notifier).updateLocationCity("Jaipure");
-          ref.read(userStepFormProvider.notifier).updateProfilePicture("https://media.licdn.com/dms/image/v2/D4D03AQE7MlpcLtRcKA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1691585595728?e=2147483647&v=beta&t=9X7KQnWckGmTjBBPBicS9eQkJgv1pra6siAFTIArNHo");
+          ref.read(userStepFormProvider.notifier).updateProfilePicture(
+              "https://media.licdn.com/dms/image/v2/D4D03AQE7MlpcLtRcKA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1691585595728?e=2147483647&v=beta&t=9X7KQnWckGmTjBBPBicS9eQkJgv1pra6siAFTIArNHo");
           ref
               .read(userStepFormProvider.notifier)
               .updateLocationState("Rajsthan");

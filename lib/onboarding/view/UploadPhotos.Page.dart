@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:crush_dating/core/preetty.dio.dart';
 import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/model/register.user.body.dart';
+import 'package:crush_dating/onboarding/service/firebaseauth.service.dart';
 import 'package:crush_dating/onboarding/service/register.service.dart';
 import 'package:crush_dating/onboarding/view/login.page.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,7 +37,7 @@ class _UploadPhotosPageState extends ConsumerState<UploadPhotosPage> {
       });
 
       try {
-        final service = RegisterUserService(await createDio());
+        final service = RegisterUserService(await createDio(ref));
         FileUploadResponse response =
             await service.uploadProfile(File(pickedFile.path));
 
@@ -92,10 +93,11 @@ class _UploadPhotosPageState extends ConsumerState<UploadPhotosPage> {
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
         child: GestureDetector(
           onTap: () async {
-            final service = RegisterUserService(await createDio());
+            final service = RegisterUserService(await createDio(ref));
 
             String imageURL = images.where((url) => url.isNotEmpty).join(", ");
-            log(imageURL);
+            log(fromdata.interests.toString());
+            log(fromdata.qualities.toString());
 
             try {
               Map<String, dynamic> response = await service.registerUser(
@@ -110,19 +112,16 @@ class _UploadPhotosPageState extends ConsumerState<UploadPhotosPage> {
                   sexualOrientation: fromdata.sexualOrientation,
                   locationCity: fromdata.locationCity,
                   locationState: fromdata.locationState,
-                  interests: fromdata.interests,
-                  qualities: fromdata.qualities,
+                  interests: fromdata.interests.toList(),
+                  qualities: fromdata.qualities.toList(),
                   firstPrompt: fromdata.firstPrompt,
                   secondPrompt: fromdata.secondPrompt,
                   thirdPrompt: fromdata.thirdPrompt,
                 ),
               );
+              final AuthService _authService = AuthService();
 
-              Navigator.pushAndRemoveUntil(
-                context,
-                CupertinoPageRoute(builder: (context) => LoginPage()),
-                (route) => false,
-              );
+              await _authService.signInWithGoogle(context, ref);
             } catch (e) {
               Fluttertoast.showToast(msg: "Something went wrong. Try again!");
             }

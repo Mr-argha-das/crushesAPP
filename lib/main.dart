@@ -1,8 +1,4 @@
-import 'package:crush_dating/chatssection/chatsection.page.dart';
-import 'package:crush_dating/crushonyou/crushonyou.page.dart';
 import 'package:crush_dating/onboarding/view/login.page.dart';
-import 'package:crush_dating/onboarding/view/UploadPhotos.Page.dart';
-import 'package:crush_dating/onboarding/view/userprompt.page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

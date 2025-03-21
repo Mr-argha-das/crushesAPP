@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/view/userprompt.page.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,6 +63,7 @@ class _SelecteQualitiesPageState extends ConsumerState<SelecteQualitiesPage> {
   Set<String> selectedOptions = {};
   @override
   Widget build(BuildContext context) {
+    final fromdata = ref.watch(userStepFormProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -130,7 +133,8 @@ class _SelecteQualitiesPageState extends ConsumerState<SelecteQualitiesPage> {
 
             ref
                 .read(userStepFormProvider.notifier)
-                .addQuality(selectedOptionsList);
+                .addQualities(selectedOptionsList);
+            log(fromdata.qualities.toString());
             Navigator.push(context,
                 CupertinoPageRoute(builder: (context) => UserPrompt()));
           },
