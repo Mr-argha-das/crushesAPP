@@ -23,37 +23,38 @@ Future<Dio> createDio(ref) async {
   var token = box.get('token');
 
   log("Token: $token");
+  if (token != null) {
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          // Retrieve token before sending request
+          options.headers.addAll({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token'
+          });
+          handler.next(options); // Continue with the request
+        },
+        onResponse: (response, handler) {
+          handler.next(response);
+        },
+        onError: (DioException e, handler) async {
+          if (e.response?.statusCode == 500) {
+            // Token expired, refresh it
+            log("Token expired, refreshing...");
 
-  dio.interceptors.add(
-    InterceptorsWrapper(
-      onRequest: (options, handler) async {
-        // Retrieve token before sending request
-        options.headers.addAll({
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token'
-        });
-        handler.next(options); // Continue with the request
-      },
-      onResponse: (response, handler) {
-        handler.next(response);
-      },
-      onError: (DioException e, handler) async {
-        if (e.response?.statusCode == 500) {
-          // Token expired, refresh it
-          log("Token expired, refreshing...");
-
-          Fluttertoast.showToast(msg: "Session expired, try login");
-          // navigatorKey.currentState?.pushAndRemoveUntil(
-          //   MaterialPageRoute(builder: (context) => SplashScreen()),
-          //   (route) => false, // Remove all routes
-          // );
-          return;
-        } else {
-          handler.next(e);
-        }
-      },
-    ),
-  );
+            Fluttertoast.showToast(msg: "Session expired, try login");
+            // navigatorKey.currentState?.pushAndRemoveUntil(
+            //   MaterialPageRoute(builder: (context) => SplashScreen()),
+            //   (route) => false, // Remove all routes
+            // );
+            return;
+          } else {
+            handler.next(e);
+          }
+        },
+      ),
+    );
+  }
 
   return dio;
 }

@@ -8,6 +8,6 @@ part 'home.service.g.dart';
 abstract class HomeService {
   factory HomeService(Dio dio, {String baseUrl}) = _HomeService;
 
-  @POST("/user/match-users/")
+  @GET("/user/match-users/")
   Future<UserMatchResModel> userMatches();
 }
