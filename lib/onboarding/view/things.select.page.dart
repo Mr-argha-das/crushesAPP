@@ -1,17 +1,19 @@
+import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/view/qualities.page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ThingsSelectPage extends StatefulWidget {
+class ThingsSelectPage extends ConsumerStatefulWidget {
   const ThingsSelectPage({super.key});
 
   @override
-  State<ThingsSelectPage> createState() => _ThingsSelectPageState();
+  _ThingsSelectPageState createState() => _ThingsSelectPageState();
 }
 
-class _ThingsSelectPageState extends State<ThingsSelectPage> {
+class _ThingsSelectPageState extends ConsumerState<ThingsSelectPage> {
   List<String> options = [
     "Traveling 🌍✈️",
     "Cooking 🍳👨‍🍳",
@@ -124,6 +126,13 @@ class _ThingsSelectPageState extends State<ThingsSelectPage> {
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
         child: GestureDetector(
           onTap: () {
+            List<String> selectedOptionsList = selectedOptions.toList();
+
+            for (int i = 0; i < selectedOptionsList.length; i++) {
+              ref
+                  .read(userStepFormProvider.notifier)
+                  .addInterest(selectedOptionsList[i]);
+            }
             Navigator.push(
                 context,
                 CupertinoPageRoute(

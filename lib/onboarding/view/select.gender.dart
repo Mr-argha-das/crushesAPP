@@ -1,19 +1,24 @@
+import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/view/select.crush.gender.page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SelectGenderPage extends StatefulWidget {
+class SelectGenderPage extends ConsumerStatefulWidget {
   const SelectGenderPage({super.key});
 
   @override
-  State<SelectGenderPage> createState() => _SelectGenderPageState();
+  _SelectGenderPageState createState() => _SelectGenderPageState();
 }
 
-class _SelectGenderPageState extends State<SelectGenderPage> {
+class _SelectGenderPageState extends ConsumerState<SelectGenderPage> {
+  int selecttedIndex = 0;
+  List<String> genderes = ["Men", "Women", "Nonbinary"];
   @override
   Widget build(BuildContext context) {
+    final formData = ref.watch(userStepFormProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -30,7 +35,7 @@ class _SelectGenderPageState extends State<SelectGenderPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Great name Vishal!",
+                  "Great name ${formData.fullName}!",
                   style: GoogleFonts.glory(
                       color: Colors.black,
                       fontSize: 32.w,
@@ -65,81 +70,108 @@ class _SelectGenderPageState extends State<SelectGenderPage> {
           SizedBox(
             height: 30.h,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-            child: Container(
-              height: 50.h,
-              width: 414.w,
-              decoration: BoxDecoration(
-                  color: Color(0xFFEFF1F5),
-                  borderRadius: BorderRadius.circular(12.r)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 20.w,
-                  ),
-                  Text(
-                    "Men 👦",
-                    style: GoogleFonts.glory(
-                        color: Colors.black,
-                        fontSize: 17.w,
-                        fontWeight: FontWeight.w500),
-                  )
-                ],
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selecttedIndex = 0;
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+              child: Container(
+                height: 50.h,
+                width: 414.w,
+                decoration: BoxDecoration(
+                    color: selecttedIndex == 0
+                        ? Color.fromARGB(255, 228, 247, 118)
+                        : Color(0xFFEFF1F5),
+                    borderRadius: BorderRadius.circular(12.r)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Text(
+                      "Men 👦",
+                      style: GoogleFonts.glory(
+                          color: Colors.black,
+                          fontSize: 17.w,
+                          fontWeight: FontWeight.w500),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-            child: Container(
-              height: 50.h,
-              width: 414.w,
-              decoration: BoxDecoration(
-                  color: Color(0xFFEFF1F5),
-                  borderRadius: BorderRadius.circular(12.r)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 20.w,
-                  ),
-                  Text(
-                    "Women  👧",
-                    style: GoogleFonts.glory(
-                        color: Colors.black,
-                        fontSize: 17.w,
-                        fontWeight: FontWeight.w500),
-                  )
-                ],
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selecttedIndex = 1;
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+              child: Container(
+                height: 50.h,
+                width: 414.w,
+                decoration: BoxDecoration(
+                    color: selecttedIndex == 1
+                        ? Color.fromARGB(255, 228, 247, 118)
+                        : Color(0xFFEFF1F5),
+                    borderRadius: BorderRadius.circular(12.r)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Text(
+                      "Women  👧",
+                      style: GoogleFonts.glory(
+                          color: Colors.black,
+                          fontSize: 17.w,
+                          fontWeight: FontWeight.w500),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-            child: Container(
-              height: 50.h,
-              width: 414.w,
-              decoration: BoxDecoration(
-                  color: Color(0xFFEFF1F5),
-                  borderRadius: BorderRadius.circular(12.r)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 20.w,
-                  ),
-                  Text(
-                    "Nonbinary peoople 🌈",
-                    style: GoogleFonts.glory(
-                        color: Colors.black,
-                        fontSize: 17.w,
-                        fontWeight: FontWeight.w500),
-                  )
-                ],
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selecttedIndex = 2;
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+              child: Container(
+                height: 50.h,
+                width: 414.w,
+                decoration: BoxDecoration(
+                    color: selecttedIndex == 2
+                        ? Color.fromARGB(255, 228, 247, 118)
+                        : Color(0xFFEFF1F5),
+                    borderRadius: BorderRadius.circular(12.r)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Text(
+                      "Nonbinary peoople 🌈",
+                      style: GoogleFonts.glory(
+                          color: Colors.black,
+                          fontSize: 17.w,
+                          fontWeight: FontWeight.w500),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -147,8 +179,14 @@ class _SelectGenderPageState extends State<SelectGenderPage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
             child: GestureDetector(
-              onTap: (){
-                Navigator.push(context, CupertinoPageRoute(builder: (context) => SelectedGenderForcrush()));
+              onTap: () {
+                ref
+                    .read(userStepFormProvider.notifier)
+                    .updateGender(genderes[selecttedIndex]);
+                Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => SelectedGenderForcrush()));
               },
               child: Container(
                 height: 50.h,
@@ -159,7 +197,8 @@ class _SelectGenderPageState extends State<SelectGenderPage> {
                 child: Center(
                   child: Text(
                     "Next",
-                    style: GoogleFonts.inter(color: Colors.white, fontSize: 16.w),
+                    style:
+                        GoogleFonts.inter(color: Colors.white, fontSize: 16.w),
                   ),
                 ),
               ),

@@ -1,19 +1,24 @@
 import 'package:crush_dating/home/home.page.dart';
+import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
+import 'package:crush_dating/onboarding/service/firebaseauth.service.dart';
 import 'package:crush_dating/onboarding/view/name.page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final AuthService _authService = AuthService();
   @override
   Widget build(BuildContext context) {
+    // final userProfile = ref.read(userStepFormProvider.notifier);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -26,8 +31,8 @@ class _LoginPageState extends State<LoginPage> {
                 image: DecorationImage(
                     image: AssetImage('assets/Background.png'))),
           )),
-         SizedBox(
-          height: 520.h,
+          SizedBox(
+            height: 520.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,29 +71,46 @@ class _LoginPageState extends State<LoginPage> {
                   height: 25.h,
                 ),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => NameAddPage()));
-                  },
-                  child: SocailButton(icon: 'assets/facebook.png', title: 'Login with Facebook',)),
-                SizedBox(height: 10.h,),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NameAddPage()));
+                    },
+                    child: SocailButton(
+                      icon: 'assets/facebook.png',
+                      title: 'Login with Facebook',
+                    )),
+                SizedBox(
+                  height: 10.h,
+                ),
                 GestureDetector(
-                  onTap: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-                  },
-                  child: SocailButton(icon: 'assets/google.png', title: 'Login with Google',)),
-                SizedBox(height: 10.h,),
-                SocailButton(icon: 'assets/apple.png', title: 'Login with Apple',),
-                SizedBox(height: 10.h,),
+                    onTap: () async {
+                      //  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                      await _authService.signInWithGoogle(context, ref);
+                    },
+                    child: SocailButton(
+                      icon: 'assets/google.png',
+                      title: 'Login with Google',
+                    )),
+                SizedBox(
+                  height: 10.h,
+                ),
+                SocailButton(
+                  icon: 'assets/apple.png',
+                  title: 'Login with Apple',
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
               ],
             ),
           ),
-          
         ],
       ),
     );
   }
 }
-
 
 class SocailButton extends StatelessWidget {
   final String icon;
@@ -101,12 +123,11 @@ class SocailButton extends StatelessWidget {
       height: 56.h,
       width: 348.w,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(500),
-        border: Border.all(color: Colors.black, width: 1)
-      ),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(500),
+          border: Border.all(color: Colors.black, width: 1)),
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 10.w),
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -115,11 +136,16 @@ class SocailButton extends StatelessWidget {
               height: 30.w,
               width: 30.w,
               decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage(icon))
-              ),
+                  image: DecorationImage(image: AssetImage(icon))),
             ),
             Spacer(),
-            Text(title, style: GoogleFonts.glory(color: Colors.black, fontSize: 18.w, fontWeight: FontWeight.w600),),
+            Text(
+              title,
+              style: GoogleFonts.glory(
+                  color: Colors.black,
+                  fontSize: 18.w,
+                  fontWeight: FontWeight.w600),
+            ),
             Spacer(),
             SizedBox(
               width: 30,

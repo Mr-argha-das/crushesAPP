@@ -1,20 +1,21 @@
-import 'package:crush_dating/onboarding/view/select.gender.dart';
+import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/view/userprompt.page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SelecteQualitiesPage extends StatefulWidget {
+class SelecteQualitiesPage extends ConsumerStatefulWidget {
   const SelecteQualitiesPage({super.key});
 
   @override
-  State<SelecteQualitiesPage> createState() => _SelecteQualitiesPageState();
+  _SelecteQualitiesPageState createState() => _SelecteQualitiesPageState();
 }
 
-class _SelecteQualitiesPageState extends State<SelecteQualitiesPage> {
+class _SelecteQualitiesPageState extends ConsumerState<SelecteQualitiesPage> {
   List<String> option = [
-     "Travel enthusiast ✈️",
+    "Travel enthusiast ✈️",
     "Music lover 🎶",
     "Bookworm 📚",
     "Fitness enthusiast 🏋️‍♀️",
@@ -29,7 +30,6 @@ class _SelecteQualitiesPageState extends State<SelecteQualitiesPage> {
     "Caring 🤗",
     "Playful 🎮",
     "Stylish 👗",
-    
     "Adventurous �✨",
     "Kind-hearted ❤️",
     "Ambitious 💼🔥",
@@ -55,7 +55,6 @@ class _SelecteQualitiesPageState extends State<SelecteQualitiesPage> {
     "Tech-savvy 💻",
     "Animal lover 🐾",
     "Foodie 🍴",
-   
   ];
 
   // Set to store selected options
@@ -100,8 +99,8 @@ class _SelecteQualitiesPageState extends State<SelecteQualitiesPage> {
                   return FilterChip(
                     label: Text(
                       option,
-                      style:
-                          GoogleFonts.glory(color: Colors.black, fontSize: 18.w),
+                      style: GoogleFonts.glory(
+                          color: Colors.black, fontSize: 18.w),
                     ),
                     selected: selectedOptions.contains(option),
                     onSelected: (isSelected) {
@@ -117,7 +116,7 @@ class _SelecteQualitiesPageState extends State<SelecteQualitiesPage> {
                 }).toList(),
               ),
             ),
-             SizedBox(
+            SizedBox(
               height: 100.h,
             )
           ],
@@ -127,6 +126,13 @@ class _SelecteQualitiesPageState extends State<SelecteQualitiesPage> {
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
         child: GestureDetector(
           onTap: () {
+            List<String> selectedOptionsList = selectedOptions.toList();
+
+            for (int i = 0; i < selectedOptionsList.length; i++) {
+              ref
+                  .read(userStepFormProvider.notifier)
+                  .addQuality(selectedOptionsList[i]);
+            }
             Navigator.push(context,
                 CupertinoPageRoute(builder: (context) => UserPrompt()));
           },

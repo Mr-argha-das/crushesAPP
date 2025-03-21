@@ -1,19 +1,29 @@
+import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/view/select.gender.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class NameAddPage extends StatefulWidget {
+class NameAddPage extends ConsumerStatefulWidget {
   const NameAddPage({super.key});
 
   @override
-  State<NameAddPage> createState() => _NameAddPageState();
+  _NameAddPageState createState() => _NameAddPageState();
 }
 
-class _NameAddPageState extends State<NameAddPage> {
+class _NameAddPageState extends ConsumerState<NameAddPage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController dayController = TextEditingController();
+  TextEditingController monthController = TextEditingController();
+  TextEditingController yearController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final fromData = ref.watch(userStepFormProvider);
+    if (nameController.text == "") {
+      nameController.text = fromData.fullName;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -68,6 +78,7 @@ class _NameAddPageState extends State<NameAddPage> {
                     width: 414.w,
                     child: Center(
                         child: TextFormField(
+                      controller: nameController,
                       decoration: InputDecoration(
                           hintText: "Enter your full name",
                           helperStyle:
@@ -131,8 +142,10 @@ class _NameAddPageState extends State<NameAddPage> {
                         width: 100.w,
                         child: Center(
                             child: TextFormField(
+                          controller: dayController,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              hintText: "01",
+                              hintText: "13",
                               helperStyle:
                                   GoogleFonts.inter(color: Color(0xFFA09CAB)),
                               fillColor: Color(0xFFEFF1F5),
@@ -167,6 +180,8 @@ class _NameAddPageState extends State<NameAddPage> {
                         width: 100.w,
                         child: Center(
                             child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: monthController,
                           decoration: InputDecoration(
                               hintText: "01",
                               helperStyle:
@@ -203,6 +218,8 @@ class _NameAddPageState extends State<NameAddPage> {
                         width: 140.w,
                         child: Center(
                             child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: yearController,
                           decoration: InputDecoration(
                               hintText: "2006",
                               helperStyle:
@@ -239,8 +256,16 @@ class _NameAddPageState extends State<NameAddPage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
             child: GestureDetector(
-              onTap: (){
-                Navigator.push(context, CupertinoPageRoute(builder: (context) => SelectGenderPage()));
+              onTap: () {
+                ref
+                    .read(userStepFormProvider.notifier)
+                    .updateFullName(nameController.text);
+                ref.read(userStepFormProvider.notifier).updateAge(
+                    "${dayController.text}/${monthController.text}/${yearController.text}");
+                Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => SelectGenderPage()));
               },
               child: Container(
                 height: 50.h,
@@ -251,7 +276,8 @@ class _NameAddPageState extends State<NameAddPage> {
                 child: Center(
                   child: Text(
                     "Next",
-                    style: GoogleFonts.inter(color: Colors.white, fontSize: 16.w),
+                    style:
+                        GoogleFonts.inter(color: Colors.white, fontSize: 16.w),
                   ),
                 ),
               ),
