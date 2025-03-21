@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:crush_dating/core/preetty.dio.dart';
-import 'package:crush_dating/home/home.page.dart';
+import 'package:crush_dating/home/view/home.page.dart';
 import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/model/login.response.model.dart';
 import 'package:crush_dating/onboarding/service/login.service.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -36,6 +37,11 @@ class AuthService {
               password: googleUser.id,
               clientId: googleUser.email,
               clientSecret: googleUser.email);
+          if (!Hive.isBoxOpen('userdata')) {
+            await Hive.openBox('userdata');
+          }
+          var box = Hive.box('userdata');
+          await box.put('token', response.accessToken);
           Navigator.pushAndRemoveUntil(
               context,
               CupertinoPageRoute(builder: (context) => HomePage()),

@@ -1,4 +1,4 @@
-import 'package:crush_dating/home/home.page.dart';
+import 'package:crush_dating/home/view/home.page.dart';
 import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/service/firebaseauth.service.dart';
 import 'package:crush_dating/onboarding/view/name.page.dart';
