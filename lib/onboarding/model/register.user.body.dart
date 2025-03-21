@@ -4,40 +4,49 @@
 
 import 'dart:convert';
 
-RegisterModelBody registerModelBodyFromJson(String str) => RegisterModelBody.fromJson(json.decode(str));
+RegisterModelBody registerModelBodyFromJson(String str) =>
+    RegisterModelBody.fromJson(json.decode(str));
 
-String registerModelBodyToJson(RegisterModelBody data) => json.encode(data.toJson());
+String registerModelBodyToJson(RegisterModelBody data) =>
+    json.encode(data.toJson());
 
 class RegisterModelBody {
-    String uuid;
-    String emailAddress;
-    String fullName;
-    String profilePicture;
-    String age;
-    String gender;
-    String password;
-    String sexualOrientation;
-    String locationCity;
-    String locationState;
-    List<String> interests;
-    List<String> qualities;
+  String uuid;
+  String emailAddress;
+  String fullName;
+  String profilePicture;
+  String age;
+  String gender;
+  String password;
+  String sexualOrientation;
+  String locationCity;
+  String locationState;
+  List<String> interests;
+  List<String> qualities;
+  String firstPrompt;
+  String secondPrompt;
+  String thirdPrompt;
 
-    RegisterModelBody({
-        required this.uuid,
-        required this.emailAddress,
-        required this.fullName,
-        required this.profilePicture,
-        required this.age,
-        required this.gender,
-        required this.password,
-        required this.sexualOrientation,
-        required this.locationCity,
-        required this.locationState,
-        required this.interests,
-        required this.qualities,
-    });
+  RegisterModelBody({
+    required this.uuid,
+    required this.emailAddress,
+    required this.fullName,
+    required this.profilePicture,
+    required this.age,
+    required this.gender,
+    required this.password,
+    required this.sexualOrientation,
+    required this.locationCity,
+    required this.locationState,
+    required this.interests,
+    required this.qualities,
+    required this.firstPrompt,
+    required this.secondPrompt,
+    required this.thirdPrompt,
+  });
 
-    factory RegisterModelBody.fromJson(Map<String, dynamic> json) => RegisterModelBody(
+  factory RegisterModelBody.fromJson(Map<String, dynamic> json) =>
+      RegisterModelBody(
         uuid: json["uuid"],
         emailAddress: json["email_address"],
         fullName: json["fullName"],
@@ -50,9 +59,12 @@ class RegisterModelBody {
         locationState: json["location_state"],
         interests: List<String>.from(json["interests"].map((x) => x)),
         qualities: List<String>.from(json["qualities"].map((x) => x)),
-    );
+        firstPrompt: json["firstPrompt"],
+        secondPrompt: json["secondPrompt"],
+        thirdPrompt: json["thirdPrompt"],
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "uuid": uuid,
         "email_address": emailAddress,
         "fullName": fullName,
@@ -65,5 +77,8 @@ class RegisterModelBody {
         "location_state": locationState,
         "interests": List<dynamic>.from(interests.map((x) => x)),
         "qualities": List<dynamic>.from(qualities.map((x) => x)),
-    };
+        "firstPrompt": firstPrompt,
+        "secondPrompt": secondPrompt,
+        "thirdPrompt": thirdPrompt,
+      };
 }

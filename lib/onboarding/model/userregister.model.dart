@@ -11,6 +11,9 @@ class UserRegisterModel {
   final String locationState;
   final List<String> interests;
   final List<String> qualities;
+  final String firstPrompt;
+  final String secondPrompt;
+  final String thirdPrompt;
 
   UserRegisterModel({
     required this.uuid,
@@ -25,9 +28,12 @@ class UserRegisterModel {
     required this.locationState,
     required this.interests,
     required this.qualities,
+    required this.firstPrompt,
+    required this.secondPrompt,
+    required this.thirdPrompt,
   });
 
-  // Method to copy the object with optional updated values
+  // ✅ Updated copyWith method
   UserRegisterModel copyWith({
     String? uuid,
     String? emailAddress,
@@ -41,6 +47,9 @@ class UserRegisterModel {
     String? locationState,
     List<String>? interests,
     List<String>? qualities,
+    String? firstPrompt,
+    String? secondPrompt,
+    String? thirdPrompt,
   }) {
     return UserRegisterModel(
       uuid: uuid ?? this.uuid,
@@ -55,10 +64,13 @@ class UserRegisterModel {
       locationState: locationState ?? this.locationState,
       interests: interests ?? this.interests,
       qualities: qualities ?? this.qualities,
+      firstPrompt: firstPrompt ?? this.firstPrompt,
+      secondPrompt: secondPrompt ?? this.secondPrompt,
+      thirdPrompt: thirdPrompt ?? this.thirdPrompt,
     );
   }
 
-  // Factory constructor to create a UserRegisterModel from JSON
+  // ✅ Updated factory constructor to include missing fields
   factory UserRegisterModel.fromJson(Map<String, dynamic> json) {
     return UserRegisterModel(
       uuid: json['uuid'],
@@ -73,10 +85,13 @@ class UserRegisterModel {
       locationState: json['location_state'],
       interests: List<String>.from(json['interests']),
       qualities: List<String>.from(json['qualities']),
+      firstPrompt: json['firstPrompt'],
+      secondPrompt: json['secondPrompt'],
+      thirdPrompt: json['thirdPrompt'],
     );
   }
 
-  // Method to convert to JSON
+  // ✅ Updated toJson method
   Map<String, dynamic> toJson() {
     return {
       'uuid': uuid,
@@ -91,6 +106,9 @@ class UserRegisterModel {
       'location_state': locationState,
       'interests': interests,
       'qualities': qualities,
+      'firstPrompt': firstPrompt,
+      'secondPrompt': secondPrompt,
+      'thirdPrompt': thirdPrompt,
     };
   }
 }

@@ -22,28 +22,38 @@ class UploadPhotosPage extends ConsumerStatefulWidget {
 }
 
 class _UploadPhotosPageState extends ConsumerState<UploadPhotosPage> {
-  File? _imageFile;
+  List<String> images = List.filled(6, ""); // Ensuring correct indexing
+
   Future<void> _pickImage(int index) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
+      if (!mounted) return; // Prevent errors if widget is unmounted
+
       setState(() {
-        _imageFile = File(pickedFile.path);
+        images[index] = pickedFile.path; // Temporarily store local path
       });
-      final service = RegisterUserService(await createDio());
-      FileUploadResponse response =
-          await service.uploadProfile(File(pickedFile.path));
-      setState(() {
-        images[index] = response.status.toString();
-      });
+
+      try {
+        final service = RegisterUserService(await createDio());
+        FileUploadResponse response =
+            await service.uploadProfile(File(pickedFile.path));
+
+        if (!mounted) return;
+        setState(() {
+          images[index] = response.status ?? ""; // Ensure correct field
+        });
+      } catch (e) {
+        Fluttertoast.showToast(msg: "Failed to upload image");
+      }
     }
   }
 
-  List<String> images = [];
   @override
   Widget build(BuildContext context) {
     final fromdata = ref.watch(userStepFormProvider);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -65,12 +75,12 @@ class _UploadPhotosPageState extends ConsumerState<UploadPhotosPage> {
                 spacing: 10.w,
                 runSpacing: 10.h,
                 children: List.generate(
-                    6,
-                    (index) => GestureDetector(
-                        onTap: () {
-                          _pickImage(index);
-                        },
-                        child: buildPhotoBox(index))),
+                  6,
+                  (index) => GestureDetector(
+                    onTap: () => _pickImage(index),
+                    child: buildPhotoBox(index),
+                  ),
+                ),
               ),
             ),
             Spacer(),
@@ -83,46 +93,47 @@ class _UploadPhotosPageState extends ConsumerState<UploadPhotosPage> {
         child: GestureDetector(
           onTap: () async {
             final service = RegisterUserService(await createDio());
-            String imageURL = "";
-            for (int i = 0; i < images.length; i++) {
-              setState(() {
-                if (imageURL == "") {
-                  imageURL = images[i];
-                } else {
-                  imageURL = "$imageURL, ${images[i]}";
-                }
-              });
-            }
+
+            String imageURL = images.where((url) => url.isNotEmpty).join(", ");
+            log(imageURL);
+
             try {
               Map<String, dynamic> response = await service.registerUser(
-                  RegisterModelBody(
-                      uuid: fromdata.uuid,
-                      emailAddress: fromdata.emailAddress,
-                      fullName: fromdata.fullName,
-                      profilePicture: imageURL,
-                      age: fromdata.age,
-                      gender: fromdata.gender,
-                      password: fromdata.password,
-                      sexualOrientation: fromdata.sexualOrientation,
-                      locationCity: fromdata.locationCity,
-                      locationState: fromdata.locationState,
-                      interests: fromdata.interests,
-                      qualities: fromdata.qualities));
+                RegisterModelBody(
+                  uuid: fromdata.uuid,
+                  emailAddress: fromdata.emailAddress,
+                  fullName: fromdata.fullName,
+                  profilePicture: imageURL,
+                  age: fromdata.age,
+                  gender: fromdata.gender,
+                  password: fromdata.password,
+                  sexualOrientation: fromdata.sexualOrientation,
+                  locationCity: fromdata.locationCity,
+                  locationState: fromdata.locationState,
+                  interests: fromdata.interests,
+                  qualities: fromdata.qualities,
+                  firstPrompt: fromdata.firstPrompt,
+                  secondPrompt: fromdata.secondPrompt,
+                  thirdPrompt: fromdata.thirdPrompt,
+                ),
+              );
+
               Navigator.pushAndRemoveUntil(
-                  context,
-                  CupertinoPageRoute(builder: (context) => LoginPage()),
-                  (route) => false);
+                context,
+                CupertinoPageRoute(builder: (context) => LoginPage()),
+                (route) => false,
+              );
             } catch (e) {
-              Fluttertoast.showToast(
-                  msg: "Something went wrong to create account");
+              Fluttertoast.showToast(msg: "Something went wrong. Try again!");
             }
           },
           child: Container(
             height: 50.h,
             width: 414.w,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: Color(0xFF1C1B1F)),
+              borderRadius: BorderRadius.circular(12.r),
+              color: const Color(0xFF1C1B1F),
+            ),
             child: Center(
               child: Text(
                 "Let's find your match",
@@ -135,29 +146,31 @@ class _UploadPhotosPageState extends ConsumerState<UploadPhotosPage> {
     );
   }
 
-  Widget buildPhotoBox(index) {
+  Widget buildPhotoBox(int index) {
     return Container(
       width: 100.w,
       height: 100.w,
       decoration: BoxDecoration(
-        color: Color(0xFFEFF1F5),
+        color: const Color(0xFFEFF1F5),
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Center(
-        child: images[index].isEmpty
-            ? Icon(
-                Icons.add,
-                color: Colors.black,
-                size: 30.sp,
-              )
-            : Container(
+        child: (index < images.length && images[index].isNotEmpty)
+            ? Container(
                 width: 100.w,
                 height: 100.w,
                 decoration: BoxDecoration(
-                    color: Color(0xFFEFF1F5),
-                    borderRadius: BorderRadius.circular(12.r),
-                    image: DecorationImage(
-                        image: NetworkImage(images[index]), fit: BoxFit.cover)),
+                  borderRadius: BorderRadius.circular(12.r),
+                  image: DecorationImage(
+                    image: NetworkImage(images[index]),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            : Icon(
+                Icons.add,
+                color: Colors.black,
+                size: 30.sp,
               ),
       ),
     );

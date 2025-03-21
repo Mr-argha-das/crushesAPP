@@ -128,11 +128,9 @@ class _SelecteQualitiesPageState extends ConsumerState<SelecteQualitiesPage> {
           onTap: () {
             List<String> selectedOptionsList = selectedOptions.toList();
 
-            for (int i = 0; i < selectedOptionsList.length; i++) {
-              ref
-                  .read(userStepFormProvider.notifier)
-                  .addQuality(selectedOptionsList[i]);
-            }
+            ref
+                .read(userStepFormProvider.notifier)
+                .addQuality(selectedOptionsList);
             Navigator.push(context,
                 CupertinoPageRoute(builder: (context) => UserPrompt()));
           },

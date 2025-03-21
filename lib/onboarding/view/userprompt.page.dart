@@ -1,18 +1,20 @@
+import 'package:crush_dating/onboarding/controller/stepform.controller.dart';
 import 'package:crush_dating/onboarding/view/UploadPhotos.Page.dart';
 import 'package:crush_dating/onboarding/view/select.gender.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UserPrompt extends StatefulWidget {
+class UserPrompt extends ConsumerStatefulWidget {
   const UserPrompt({super.key});
 
   @override
-  State<UserPrompt> createState() => _UserPromptState();
+  _UserPromptState createState() => _UserPromptState();
 }
 
-class _UserPromptState extends State<UserPrompt> {
+class _UserPromptState extends ConsumerState<UserPrompt> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,51 +73,59 @@ class _UserPromptState extends State<UserPrompt> {
                         width: 414.w,
                         child: Center(
                             child: TextFormField(
-            style: GoogleFonts.inter(
-              fontSize: 18.0,  // Larger font size
-              color: Colors.black,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter your First prompt",
-              hintStyle: GoogleFonts.inter(
-          fontSize: 18.0,  // Larger hint text
-          color: const Color(0xFFA09CAB),
-              ),
-              contentPadding: EdgeInsets.symmetric(
-          vertical: 24.0,  // Increased vertical padding
-          horizontal: 20.0,
-              ),
-              filled: true,
-              fillColor: const Color(0xFFEFF1F5),
-              constraints: const BoxConstraints(
-          minHeight: 80.0,  // Explicit height constraint
-              ),
-              border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              helperStyle: GoogleFonts.inter(
-          color: const Color(0xFFA09CAB),
-          fontSize: 14.0,
-              ),
-            ),
-          )),
+                          style: GoogleFonts.inter(
+                            fontSize: 18.0, // Larger font size
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Enter your First prompt",
+                            hintStyle: GoogleFonts.inter(
+                              fontSize: 18.0, // Larger hint text
+                              color: const Color(0xFFA09CAB),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 24.0, // Increased vertical padding
+                              horizontal: 20.0,
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFEFF1F5),
+                            constraints: const BoxConstraints(
+                              minHeight: 80.0, // Explicit height constraint
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            helperStyle: GoogleFonts.inter(
+                              color: const Color(0xFFA09CAB),
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          onChanged: (value) {
+                            ref
+                                .watch(userStepFormProvider.notifier)
+                                .updateFirstPrompt(value);
+                          },
+                        )),
                       )
                     ],
                   )),
-                 
               SizedBox(
                 height: 30.h,
               ),
@@ -145,52 +155,60 @@ class _UserPromptState extends State<UserPrompt> {
                         width: 414.w,
                         child: Center(
                             child: TextFormField(
-            style: GoogleFonts.inter(
-              fontSize: 18.0,  // Larger font size
-              color: Colors.black,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter your Second prompt",
-              hintStyle: GoogleFonts.inter(
-          fontSize: 18.0,  // Larger hint text
-          color: const Color(0xFFA09CAB),
-              ),
-              contentPadding: EdgeInsets.symmetric(
-          vertical: 24.0,  // Increased vertical padding
-          horizontal: 20.0,
-              ),
-              filled: true,
-              fillColor: const Color(0xFFEFF1F5),
-              constraints: const BoxConstraints(
-          minHeight: 80.0,  // Explicit height constraint
-              ),
-              border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              helperStyle: GoogleFonts.inter(
-          color: const Color(0xFFA09CAB),
-          fontSize: 14.0,
-              ),
-            ),
-          )),
+                          style: GoogleFonts.inter(
+                            fontSize: 18.0, // Larger font size
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Enter your Second prompt",
+                            hintStyle: GoogleFonts.inter(
+                              fontSize: 18.0, // Larger hint text
+                              color: const Color(0xFFA09CAB),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 24.0, // Increased vertical padding
+                              horizontal: 20.0,
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFEFF1F5),
+                            constraints: const BoxConstraints(
+                              minHeight: 80.0, // Explicit height constraint
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            helperStyle: GoogleFonts.inter(
+                              color: const Color(0xFFA09CAB),
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          onChanged: (value) {
+                            ref
+                                .watch(userStepFormProvider.notifier)
+                                .updateSecondPrompt(value);
+                          },
+                        )),
                       )
                     ],
                   )),
-             
-             SizedBox(
+              SizedBox(
                 height: 30.h,
               ),
               Padding(
@@ -219,80 +237,88 @@ class _UserPromptState extends State<UserPrompt> {
                         width: 414.w,
                         child: Center(
                             child: TextFormField(
-            style: GoogleFonts.inter(
-              fontSize: 18.0,  // Larger font size
-              color: Colors.black,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter your Third prompt",
-              hintStyle: GoogleFonts.inter(
-          fontSize: 18.0,  // Larger hint text
-          color: const Color(0xFFA09CAB),
-              ),
-              contentPadding: EdgeInsets.symmetric(
-          vertical: 24.0,  // Increased vertical padding
-          horizontal: 20.0,
-              ),
-              filled: true,
-              fillColor: const Color(0xFFEFF1F5),
-              constraints: const BoxConstraints(
-          minHeight: 80.0,  // Explicit height constraint
-              ),
-              border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: Color(0xFFEFF1F5)),
-              ),
-              helperStyle: GoogleFonts.inter(
-          color: const Color(0xFFA09CAB),
-          fontSize: 14.0,
-              ),
-            ),
-          )),
+                          style: GoogleFonts.inter(
+                            fontSize: 18.0, // Larger font size
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Enter your Third prompt",
+                            hintStyle: GoogleFonts.inter(
+                              fontSize: 18.0, // Larger hint text
+                              color: const Color(0xFFA09CAB),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 24.0, // Increased vertical padding
+                              horizontal: 20.0,
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFEFF1F5),
+                            constraints: const BoxConstraints(
+                              minHeight: 80.0, // Explicit height constraint
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFEFF1F5)),
+                            ),
+                            helperStyle: GoogleFonts.inter(
+                              color: const Color(0xFFA09CAB),
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          onChanged: (value) {
+                            ref
+                                .watch(userStepFormProvider.notifier)
+                                .updateThirdPrompt(value);
+                          },
+                        )),
                       )
                     ],
                   )),
-             
-                      ],
+            ],
           ),
           Container(
-            height: MediaQuery.of(context).size.height/8,
+            height: MediaQuery.of(context).size.height / 8,
           )
         ],
       ),
       bottomSheet: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
-            child: GestureDetector(
-              onTap: (){
-                Navigator.push(context, CupertinoPageRoute(builder: (context) => UploadPhotosPage()));
-              },
-              child: Container(
-                height: 50.h,
-                width: 414.w,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.r),
-                    color: Color(0xFF1C1B1F)),
-                child: Center(
-                  child: Text(
-                    "Next",
-                    style: GoogleFonts.inter(color: Colors.white, fontSize: 16.w),
-                  ),
-                ),
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => UploadPhotosPage()));
+          },
+          child: Container(
+            height: 50.h,
+            width: 414.w,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.r),
+                color: Color(0xFF1C1B1F)),
+            child: Center(
+              child: Text(
+                "Next",
+                style: GoogleFonts.inter(color: Colors.white, fontSize: 16.w),
               ),
             ),
-          )
-,
+          ),
+        ),
+      ),
     );
   }
 }

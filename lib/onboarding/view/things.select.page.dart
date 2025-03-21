@@ -128,11 +128,9 @@ class _ThingsSelectPageState extends ConsumerState<ThingsSelectPage> {
           onTap: () {
             List<String> selectedOptionsList = selectedOptions.toList();
 
-            for (int i = 0; i < selectedOptionsList.length; i++) {
-              ref
+            ref
                   .read(userStepFormProvider.notifier)
-                  .addInterest(selectedOptionsList[i]);
-            }
+                  .addInterest(selectedOptionsList);
             Navigator.push(
                 context,
                 CupertinoPageRoute(

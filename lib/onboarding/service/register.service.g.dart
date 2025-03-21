@@ -3,6 +3,8 @@
 part of 'register.service.dart';
 
 // **************************************************************************
+// RetrofitGenerator
+// **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
@@ -12,19 +14,22 @@ class _RegisterUserService implements RegisterUserService {
   }
 
   final Dio _dio;
+
   String? baseUrl;
+
   final ParseErrorLogger? errorLogger;
 
   @override
   Future<Map<String, dynamic>> registerUser(RegisterModelBody body) async {
-    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    final _data = body.toJson();
 
     final _options = _setStreamType<Map<String, dynamic>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
+      Options(
+        method: 'POST',
+        headers: _headers,
+      )
           .compose(
             _dio.options,
             '/users/create',
@@ -34,25 +39,23 @@ class _RegisterUserService implements RegisterUserService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
 
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Map<String, dynamic> _value;
-
     try {
-      // Assuming the response is a raw JSON Map, without the User model
-      _value = _result.data ?? {};  // Safe check to avoid null errors
-    } on Object catch (e, s) {
+      final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+      if (_result.data == null) {
+        throw Exception("No data received from server");
+      }
+      return _result.data!;
+    } catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
     }
-
-    return _value;
   }
 
   @override
   Future<FileUploadResponse> uploadProfile(File file) async {
-    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
+
     final _data = FormData();
     _data.files.add(
       MapEntry(
@@ -68,7 +71,6 @@ class _RegisterUserService implements RegisterUserService {
       Options(
         method: 'POST',
         headers: _headers,
-        extra: _extra,
         contentType: 'multipart/form-data',
       )
           .compose(
@@ -80,17 +82,16 @@ class _RegisterUserService implements RegisterUserService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
 
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late FileUploadResponse _value;
-
     try {
-      _value = FileUploadResponse.fromJson(_result.data!);  // Assuming FileUploadResponse model exists
-    } on Object catch (e, s) {
+      final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+      if (_result.data == null) {
+        throw Exception("No data received from server");
+      }
+      return FileUploadResponse.fromJson(_result.data!);
+    } catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
     }
-
-    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
