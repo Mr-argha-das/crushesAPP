@@ -60,10 +60,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                         width: 327.w,
                         child: CardSwiper(
                           controller: controller,
-                          cardsCount: 10,
+                          cardsCount: snapshot.data.length,
                           onSwipe: _onSwipe,
                           onUndo: _onUndo,
-                          numberOfCardsDisplayed: 4,
+                          numberOfCardsDisplayed: 2,
                           backCardOffset: const Offset(0, 20),
                           padding: const EdgeInsets.all(0.0),
                           cardBuilder: (
@@ -82,7 +82,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     borderRadius: BorderRadius.circular(20.r),
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                          snapshot.data[0].profilePicture
+                                          snapshot.data[index].profilePicture
                                               .split(",")[0]
                                               .trim(),
                                         ),
@@ -137,7 +137,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Text(
-                                                        "${snapshot.data[0].fullName},",
+                                                        "${snapshot.data[index].fullName},",
                                                         style:
                                                             GoogleFonts.glory(
                                                                 color: Colors
@@ -151,7 +151,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                         width: 5.w,
                                                       ),
                                                       Text(
-                                                        "${calculateAge(snapshot.data[0].age)}",
+                                                        "${calculateAge(snapshot.data[index].age)}",
                                                         style:
                                                             GoogleFonts.glory(
                                                                 color: Colors
@@ -187,7 +187,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                         ),
                                                       ),
                                                       Text(
-                                                        snapshot.data[0]
+                                                        snapshot.data[index]
                                                             .locationCity,
                                                         style:
                                                             GoogleFonts.glory(
