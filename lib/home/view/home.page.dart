@@ -15,6 +15,10 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   final CardSwiperController controller = CardSwiperController();
+  String limitString(String text, int limit) {
+    return text.length > limit ? '${text.substring(0, limit)}.. ' : text;
+  }
+
   @override
   Widget build(BuildContext context) {
     final userMatches = ref.watch(userMatchesProvider);
@@ -137,7 +141,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Text(
-                                                        "${snapshot.data[index].fullName},",
+                                                        "${limitString(snapshot.data[index].fullName, 12)},",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                         style:
                                                             GoogleFonts.glory(
                                                                 color: Colors
