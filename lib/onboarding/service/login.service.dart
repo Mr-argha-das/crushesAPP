@@ -6,7 +6,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 part 'login.service.g.dart'; // This will be generated
 
-@RestApi(baseUrl: "https://crushes-backend-fzuu4.ondigitalocean.app")
+@RestApi(baseUrl: "https://4d06-2401-4900-1c1a-331b-8089-62aa-317c-5a14.ngrok-free.app")
 abstract class LoginService {
   factory LoginService(Dio dio, {String baseUrl}) = _LoginService;
 

@@ -9,12 +9,12 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 part 'register.service.g.dart'; // This will be generated
 
-@RestApi(baseUrl: "https://crushes-backend-fzuu4.ondigitalocean.app")
+@RestApi(baseUrl: "https://4d06-2401-4900-1c1a-331b-8089-62aa-317c-5a14.ngrok-free.app")
 abstract class RegisterUserService {
   factory RegisterUserService(Dio dio, {String baseUrl}) = _RegisterUserService;
 
   @POST("/users/create")
-  Future<Map<String, dynamic>> registerUser(@Body() RegisterModelBody body);
+  Future<HttpResponse<dynamic>> registerUser(@Body() RegisterModelBody body);
   @POST('/user/upload-profile')
   @MultiPart()
   Future<FileUploadResponse> uploadProfile(

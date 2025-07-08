@@ -100,7 +100,7 @@ class _UploadPhotosPageState extends ConsumerState<UploadPhotosPage> {
             log(fromdata.qualities.toString());
 
             try {
-              Map<String, dynamic> response = await service.registerUser(
+              final response = await service.registerUser(
                 RegisterModelBody(
                   uuid: fromdata.uuid,
                   emailAddress: fromdata.emailAddress,

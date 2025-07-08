@@ -10,7 +10,8 @@ part of 'home.service.dart';
 
 class _HomeService implements HomeService {
   _HomeService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://crushes-backend-fzuu4.ondigitalocean.app';
+    baseUrl ??=
+        'https://4d06-2401-4900-1c1a-331b-8089-62aa-317c-5a14.ngrok-free.app';
   }
 
   final Dio _dio;
